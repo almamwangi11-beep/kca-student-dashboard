@@ -7,6 +7,8 @@ A centralized, responsive, and production-grade web dashboard for KCA University
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
+🌐 **Live Website**: [https://almamwangi11-beep.github.io/kca-student-dashboard/](https://almamwangi11-beep.github.io/kca-student-dashboard/)
+
 ---
 
 ## ✨ Features

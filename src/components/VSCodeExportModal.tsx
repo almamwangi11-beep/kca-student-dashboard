@@ -26,7 +26,7 @@ export const VSCodeExportModal: React.FC<VSCodeExportModalProps> = ({ isOpen, on
 
   if (!isOpen) return null;
 
-  const liveAppUrl = 'https://ais-pre-ueg7bnitkg3dkpb3lwahqq-52234824752.europe-west1.run.app';
+  const liveAppUrl = 'https://almamwangi11-beep.github.io/kca-student-dashboard/';
   const gitCommands = `git remote add origin https://github.com/almamwangi11-beep/kca-student-dashboard.git\ngit branch -M main\ngit push -u origin main`;
 
   const handleCopyLink = () => {
