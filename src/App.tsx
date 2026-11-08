@@ -12,6 +12,7 @@ import { AdminPanel } from './components/AdminPanel';
 import { LoginModal } from './components/LoginModal';
 import { ExamCardModal } from './components/ExamCardModal';
 import { ELibraryModal } from './components/ELibraryModal';
+import { VSCodeExportModal } from './components/VSCodeExportModal';
 import { ToastContainer } from './components/ToastContainer';
 import {
   BookOpen,
@@ -31,7 +32,8 @@ import {
   ShieldCheck,
   Award,
   Sparkles,
-  Download
+  Download,
+  Code2
 } from 'lucide-react';
 
 function DashboardContent() {
@@ -54,6 +56,7 @@ function DashboardContent() {
   const [selectedUnitFilter, setSelectedUnitFilter] = useState<string | null>(null);
   const [isExamCardOpen, setIsExamCardOpen] = useState(false);
   const [isELibraryOpen, setIsELibraryOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const pendingAssignments = assignmentsWithContext.filter(a => !a.isSubmitted);
   const overdueAssignments = assignmentsWithContext.filter(a => a.urgency === 'Overdue' && !a.isSubmitted);
@@ -73,6 +76,7 @@ function DashboardContent() {
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        onOpenExportModal={() => setIsExportModalOpen(true)}
       />
 
       {/* Main Page Canvas */}
@@ -450,20 +454,28 @@ function DashboardContent() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 pt-1">
+                  <div className="grid grid-cols-3 gap-2 pt-1">
                     <button
                       onClick={() => setIsELibraryOpen(true)}
-                      className="py-2 px-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors flex items-center justify-center gap-1.5"
+                      className="py-2 px-2 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors flex items-center justify-center gap-1"
                     >
                       <BookOpen className="w-3.5 h-3.5 text-amber-300" />
                       <span>e-Library</span>
                     </button>
                     <button
                       onClick={() => setIsExamCardOpen(true)}
-                      className="py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                      className="py-2 px-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors flex items-center justify-center gap-1 shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Exam Card</span>
+                    </button>
+                    <button
+                      onClick={() => setIsExportModalOpen(true)}
+                      className="py-2 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 shadow-sm"
+                      title="Download source code and open in VS Code"
+                    >
+                      <Code2 className="w-3.5 h-3.5" />
+                      <span>VS Code</span>
                     </button>
                   </div>
                 </div>
@@ -518,12 +530,19 @@ function DashboardContent() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-[11px] text-slate-400 font-mono">
-            <span>© 2026 KCA University</span>
-            <span>·</span>
-            <span>Directorate of Virtual Campus &amp; E-Learning</span>
-            <span>·</span>
-            <span>Nairobi, Kenya</span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsExportModalOpen(true)}
+              className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-slate-200"
+            >
+              <Code2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Open in VS Code (Export ZIP)</span>
+            </button>
+            <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+              <span>© 2026 KCA University</span>
+              <span>·</span>
+              <span>Nairobi, Kenya</span>
+            </div>
           </div>
         </div>
       </footer>
@@ -537,6 +556,10 @@ function DashboardContent() {
       <ELibraryModal
         isOpen={isELibraryOpen}
         onClose={() => setIsELibraryOpen(false)}
+      />
+      <VSCodeExportModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
       />
       <LoginModal />
       <ToastContainer />

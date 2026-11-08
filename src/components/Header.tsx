@@ -13,15 +13,17 @@ import {
   Calendar,
   CheckSquare,
   BookOpen,
-  ChevronDown
+  ChevronDown,
+  Code2
 } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: 'overview' | 'courses' | 'assignments' | 'timetable' | 'database' | 'admin';
   setActiveTab: (tab: 'overview' | 'courses' | 'assignments' | 'timetable' | 'database' | 'admin') => void;
+  onOpenExportModal?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenExportModal }) => {
   const {
     currentRole,
     currentStudent,
@@ -138,6 +140,18 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               <Clock className="w-3 h-3 text-amber-400" />
               <span>{sessionMinutesLeft}m session</span>
             </button>
+
+            {/* VS Code / Export Project Button */}
+            {onOpenExportModal && (
+              <button
+                onClick={onOpenExportModal}
+                title="Download code and open in Visual Studio Code"
+                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-[11px] rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-all shadow-xs"
+              >
+                <Code2 className="w-3.5 h-3.5" />
+                <span>VS Code</span>
+              </button>
+            )}
 
             {/* Notification Center Bell */}
             <div className="relative">
