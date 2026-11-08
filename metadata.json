@@ -1,0 +1,6 @@
+{
+  "name": "KCA University - Student Academic Dashboard",
+  "description": "Centralized Academic Dashboard for KCA University students (DBIT). Features zero-manual course population, urgency-sorted assignment hub, interactive timetable with Happening Now banner, and smart deadline notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
