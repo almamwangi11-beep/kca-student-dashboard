@@ -12,7 +12,9 @@ import { AdminPanel } from './components/AdminPanel';
 import { LoginModal } from './components/LoginModal';
 import { ExamCardModal } from './components/ExamCardModal';
 import { ELibraryModal } from './components/ELibraryModal';
-import { VSCodeExportModal } from './components/VSCodeExportModal';
+import { StudentIDCardModal } from './components/StudentIDCardModal';
+import { CampusPulseWidget } from './components/CampusPulseWidget';
+import { StudyTimerWidget } from './components/StudyTimerWidget';
 import { ToastContainer } from './components/ToastContainer';
 import {
   BookOpen,
@@ -33,7 +35,9 @@ import {
   Award,
   Sparkles,
   Download,
-  Code2
+  CreditCard,
+  Flame,
+  Activity
 } from 'lucide-react';
 
 function DashboardContent() {
@@ -56,7 +60,7 @@ function DashboardContent() {
   const [selectedUnitFilter, setSelectedUnitFilter] = useState<string | null>(null);
   const [isExamCardOpen, setIsExamCardOpen] = useState(false);
   const [isELibraryOpen, setIsELibraryOpen] = useState(false);
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isStudentIDOpen, setIsStudentIDOpen] = useState(false);
 
   const pendingAssignments = assignmentsWithContext.filter(a => !a.isSubmitted);
   const overdueAssignments = assignmentsWithContext.filter(a => a.urgency === 'Overdue' && !a.isSubmitted);
@@ -76,7 +80,7 @@ function DashboardContent() {
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onOpenExportModal={() => setIsExportModalOpen(true)}
+        onOpenStudentID={() => setIsStudentIDOpen(true)}
       />
 
       {/* Main Page Canvas */}
@@ -105,28 +109,30 @@ function DashboardContent() {
                 </div>
 
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <h1 className="text-xl sm:text-2xl font-extrabold text-[#002B49] tracking-tight">
                       {currentStudent.Name}
                     </h1>
-                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-[#002B49] border border-slate-200">
-                      Reg: {currentStudent.RegNumber}
-                    </span>
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      {currentStudent.AccountStatus}
-                    </span>
+                    <div className="flex items-center gap-2 text-xs font-mono">
+                      <span className="font-bold text-[#002B49]">Reg: {currentStudent.RegNumber}</span>
+                      <span className="text-slate-300" aria-hidden="true">·</span>
+                      <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        {currentStudent.AccountStatus}
+                      </span>
+                    </div>
                   </div>
 
                   <p className="text-xs font-medium text-slate-600">
-                    {currentStudent.Programme} · <span className="text-amber-800 font-semibold">{currentStudent.YearOfStudy}</span>
+                    {currentStudent.Programme} · <span className="text-amber-800 font-semibold">{currentStudent.YearOfStudy}</span> · <span className="text-slate-500">School of Technology</span>
                   </p>
 
-                  <div className="flex items-center gap-4 text-xs text-slate-500 pt-0.5 font-mono flex-wrap">
-                    <span>Email: {currentStudent.Email}</span>
-                    <span className="hidden sm:inline">·</span>
-                    <span className="hidden sm:inline">Campus: Main Campus, Nairobi</span>
-                    <span className="hidden sm:inline">·</span>
-                    <span className="hidden sm:inline">Status: Regular / Full-Time</span>
+                  <div className="flex items-center gap-3 text-xs text-slate-500 pt-0.5 font-mono flex-wrap">
+                    <span>{currentStudent.Email}</span>
+                    <span className="text-slate-300" aria-hidden="true">·</span>
+                    <span>Ruaraka Main Campus, Nairobi</span>
+                    <span className="text-slate-300" aria-hidden="true">·</span>
+                    <span>Full-Time Regular</span>
                   </div>
                 </div>
               </div>
@@ -303,6 +309,9 @@ function DashboardContent() {
                   </div>
                 </div>
 
+                {/* Smart Study Sprint Focus Tool */}
+                <StudyTimerWidget />
+
               </div>
 
               {/* Right Column (5/12): Today's Schedule & Smart Notifications */}
@@ -369,6 +378,9 @@ function DashboardContent() {
                     </div>
                   )}
                 </div>
+
+                {/* Real-Time Ruaraka Campus Pulse Widget */}
+                <CampusPulseWidget />
 
                 {/* Smart Deadline Notifications Card (mailer.php simulation) */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-3">
@@ -470,12 +482,12 @@ function DashboardContent() {
                       <span>Exam Card</span>
                     </button>
                     <button
-                      onClick={() => setIsExportModalOpen(true)}
-                      className="py-2 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 shadow-sm"
-                      title="Download source code and open in VS Code"
+                      onClick={() => setIsStudentIDOpen(true)}
+                      className="py-2 px-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 shadow-sm"
+                      title="View Smart Digital Student ID Card"
                     >
-                      <Code2 className="w-3.5 h-3.5" />
-                      <span>VS Code</span>
+                      <CreditCard className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Smart ID</span>
                     </button>
                   </div>
                 </div>
@@ -530,19 +542,12 @@ function DashboardContent() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsExportModalOpen(true)}
-              className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-slate-200"
-            >
-              <Code2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Open in VS Code (Export ZIP)</span>
-            </button>
-            <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
-              <span>© 2026 KCA University</span>
-              <span>·</span>
-              <span>Nairobi, Kenya</span>
-            </div>
+          <div className="flex items-center gap-3 text-[11px] text-slate-400 font-mono">
+            <span>© 2026 KCA University</span>
+            <span>·</span>
+            <span>Directorate of Virtual Campus &amp; E-Learning</span>
+            <span>·</span>
+            <span>Nairobi, Kenya</span>
           </div>
         </div>
       </footer>
@@ -557,9 +562,9 @@ function DashboardContent() {
         isOpen={isELibraryOpen}
         onClose={() => setIsELibraryOpen(false)}
       />
-      <VSCodeExportModal
-        isOpen={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
+      <StudentIDCardModal
+        isOpen={isStudentIDOpen}
+        onClose={() => setIsStudentIDOpen(false)}
       />
       <LoginModal />
       <ToastContainer />

@@ -14,16 +14,16 @@ import {
   CheckSquare,
   BookOpen,
   ChevronDown,
-  Code2
+  CreditCard
 } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: 'overview' | 'courses' | 'assignments' | 'timetable' | 'database' | 'admin';
   setActiveTab: (tab: 'overview' | 'courses' | 'assignments' | 'timetable' | 'database' | 'admin') => void;
-  onOpenExportModal?: () => void;
+  onOpenStudentID?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenExportModal }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenStudentID }) => {
   const {
     currentRole,
     currentStudent,
@@ -141,15 +141,15 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenE
               <span>{sessionMinutesLeft}m session</span>
             </button>
 
-            {/* VS Code / Export Project Button */}
-            {onOpenExportModal && (
+            {/* Smart Digital Student ID Card */}
+            {onOpenStudentID && (
               <button
-                onClick={onOpenExportModal}
-                title="Download code and open in Visual Studio Code"
-                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-[11px] rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-all shadow-xs"
+                onClick={onOpenStudentID}
+                title="View Smart Digital Student ID Card & Biometric Clearance"
+                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-[11px] rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold transition-all border border-white/15"
               >
-                <Code2 className="w-3.5 h-3.5" />
-                <span>VS Code</span>
+                <CreditCard className="w-3.5 h-3.5 text-amber-300" />
+                <span>Smart ID</span>
               </button>
             )}
 
