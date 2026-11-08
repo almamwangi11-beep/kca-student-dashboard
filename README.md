@@ -52,7 +52,7 @@ Ensure you have [Node.js](https://nodejs.org/) (version 18+ or 20+) installed on
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/YOUR_GITHUB_USERNAME/kca-student-dashboard.git
+   git clone https://github.com/almamwangi11-beep/kca-student-dashboard.git
    cd kca-student-dashboard
    ```
 
